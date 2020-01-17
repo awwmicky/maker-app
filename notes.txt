@@ -1,0 +1,121 @@
+< Seq. ORM CLI Setup >
+
+- how does appId === applicationId
+
+= seq. cli commands =
+(all from root directory/pathway)
+^ npx sequelize init
+    - creates project setup
+^ npx sequelize model:create --name [model-name] --attributes [field-name]
+    - npx sequelize [generate]
+    - name
+        - --[type] : options
+        - [name of value]
+    - attributes
+        - --[type] : options
+        - [column-name]:[value-type]
+^ npx sequelize db:migrate
+    - runs seq. migrations
+    - options
+        - db:migrate:undo - to previous one
+        - db:migrate:undo:all - from the beginning
+
+= default files =
+^ config.json
+- 3 objects for 3 different environment
+    - development | test *? | production
+    - dev building | ??? | server deployment
+- must apply "operatorsAlias": false/0
+    - remove deprecation warning from terminal
+
+^ index.js
+- db = {}
+    - loop thru' to import all files in 'models/'
+    - excludes/filters out 'index.js'
+- fs
+    - the functions that is exporting
+    - for each file, it is going to be imported
+        - calls it, pass it into 'db' (obj)
+            - create each model to Sequelize
+            - attach each model to 'db'
+        - property representing that model
+- db
+    - reference point
+    - access to each model (obj)
+
+
+= created model =
+^ model is the table
+- 'sequelize' (obj) & 'DataTypes' (obj)
+    - setting the database table
+- Model.associate = fn(models) {};
+    - associations can be defined here
+- return Model
+    - pulled/imported to 'index.js'
+    - 'index.js' creates model
+        - attach to 'db' (obj)
+
+---
+
+= seeders =
+- inserting test data to database
+- testing variety of data info
+    - low/high default amount to play with
+
+
+= migrations =
+^ engine execution
+- with the model, the seq-cli is going to create a migration as well
+- synonymous concept for UP & DOWN
+    - up (create) a table
+    - down (destroy) a table
+- the under the hood default
+    - pluralize table name
+    - apply id (default)
+    - apply createdAt (default)
+    - apply updatedAt (default)
+^ sequealize meta table
+- way of tracking all migrations you have made
+
+
+= associations =
+^ linking IDs
+- parent to child relations
+    - primary key to foreign key
+        - mainID.hasMany(subItems)
+        - subItems.belongsTo(MainID)
+- e.g: every artist 'has many' albums, & each album 'belongs to' an artist
+    - artist is primary key (parent)
+    - album is foreign key (child)
+    - song tracks is the main database table
+        - (main child to branch)
+
+^ relating to primary model
+- attach p-key table to f-key table
+    - for every new item that is made
+- each p-key thing will have new methods
+    - create thru' the associations
+    - CRUD funcationality + [f-key-model-name]
+
+^ setup flow
+- add field to k-key > [p-key-table-name + Id] > type: INT
+- go to p-key model > edit model.associate
+    - '.hasMany' type of association
+        - p-key model thing going to have many f-key model items
+    - fn(models) {}
+        - passes all 'models' you have
+        - models.[table-name]
+    - '.belongsTo' type of association
+        - f-key model item belongs to a p-key model thing
+
+---
+
+^ seq.sync()
+- sync the model
+- read the field/column names
+- automatically create tables for it
+- based on the schema you set
+
+***
+- do I need to keep variable name & seq.define('table-name') the same
+    - first letter capital

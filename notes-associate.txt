@@ -1,0 +1,9 @@
+= Table Association =
+^ Parent table to Child table
+- primary key
+    - all tables have their own id
+    - id will be referenced to another table
+- foreign key
+    - some tables will have secondary id
+    - key name that associates another table
+    - 

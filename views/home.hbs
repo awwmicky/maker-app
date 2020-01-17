@@ -1,0 +1,70 @@
+<main>
+
+<h2>Make - A - App</h2>
+
+<br>
+
+<blockquote>Application Listing</blockquote>
+
+<form action="/api/add/app" method="POST">
+{{!-- <form> --}}
+    <fieldset>
+        <legend>App Add</legend>
+        <input 
+            type="test" 
+            name="name"
+            placeholder="enter app. name"
+            autocomplete="off"
+        />
+        <input type="submit" value="Create App">
+    </fieldset>
+</form>
+
+<br>
+
+<blockquote>Feature Tasks</blockquote>
+
+<br>
+
+<section>
+    {{#each data_list}}
+    <div>
+        <p>{{ ./name }}</p>
+        <form action="/api/add/feat/{{ ./id }}" method="POST">
+            <fieldset>
+                <legend>Feat. Add</legend>
+                <input 
+                    type="text" 
+                    name="name"
+                    placeholder="enter feat. name"
+                    autocomplete="off"
+                />
+                <input 
+                    type="text" 
+                    name="type"
+                    placeholder="enter  method/type"
+                    autocomplete="off"
+                />
+                <input type="submit" value="Create Feat.">
+            </fieldset>
+        </form>
+
+        <section>
+            {{#each Features}}
+            <p>
+                <span>{{ ./dataValues/name }}</span>
+                -
+                <span>{{ ./dataValues/type }}</span>
+            </p>
+            {{else}}
+            <p>-- no features --</p>
+            {{/each}}
+        </section>
+    </div>
+
+    <br>            
+
+    {{/each}}
+</section>
+
+</main>
